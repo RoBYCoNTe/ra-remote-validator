@@ -3,11 +3,16 @@ import { Admin, Resource } from "react-admin";
 import dataProvider from "./dataProvider";
 import authProvider from "./authProvider";
 import addAuthHeaderFeature from "./addAuthHeaderFeature";
-import { errorsSaga, errorsReducer } from "ra-remote-validator";
+import {
+  errorsSaga,
+  errorsReducer,
+  setErrorsMapper
+} from "ra-remote-validator";
 import users from "./users";
 import roles from "./roles";
 
 const dp = addAuthHeaderFeature(dataProvider);
+setErrorsMapper(action => console.warn("action: ", action));
 
 export default class App extends Component {
   render() {

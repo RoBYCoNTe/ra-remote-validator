@@ -1,8 +1,8 @@
 import withErrors from "./withErrors";
-import errorsSaga from "./errorsSaga";
+import errorsSaga, { setErrorsMapper } from "./errorsSaga";
 import errorsReducer from "./errorsReducer";
 import RemoteErrorsInterceptor from "./RemoteErrorsInterceptor";
 
-export { withErrors, errorsSaga, errorsReducer };
+export { withErrors, errorsSaga, errorsReducer, setErrorsMapper };
 
 export default RemoteErrorsInterceptor;

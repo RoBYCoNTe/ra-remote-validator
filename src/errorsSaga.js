@@ -27,14 +27,7 @@ const mapFieldErrors = (field, errors) => {
   }
 };
 
-function* crudRemoteValidationClear() {
-  yield put({
-    type: CRUD_REMOTE_VALIDATION_CLEAR,
-    payload: { modifiedFields: false }
-  });
-}
-
-function* crudCreateFailure(action) {
+let cakephpErrorMapper = action => {
   if (!action.payload) {
     return;
   }
@@ -53,6 +46,27 @@ function* crudCreateFailure(action) {
       ...mapFieldErrors(field, errors[field])
     };
   }, {});
+  return validationErrors;
+};
+
+let defaultErrorsMapper = cakephpErrorMapper;
+const setErrorsMapper = mapper => {
+  defaultErrorsMapper = mapper;
+};
+export { setErrorsMapper };
+
+function* crudRemoteValidationClear() {
+  yield put({
+    type: CRUD_REMOTE_VALIDATION_CLEAR,
+    payload: { modifiedFields: false }
+  });
+}
+
+function* crudCreateFailure(action) {
+  const validationErrors = defaultErrorsMapper(action);
+  if (!validationErrors) {
+    return;
+  }
   yield put({ type: CRUD_REMOTE_VALIDATION_ERROR, payload: validationErrors });
 }
 
