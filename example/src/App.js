@@ -1,13 +1,28 @@
 import React, { Component } from "react";
+import { Admin, Resource } from "react-admin";
+import dataProvider from "./dataProvider";
+import authProvider from "./authProvider";
+import addAuthHeaderFeature from "./addAuthHeaderFeature";
+import { errorsSaga, errorsReducer } from "ra-remote-validator";
+import users from "./users";
+import roles from "./roles";
 
-import ExampleComponent, { withErrors } from "ra-remote-validator";
+const dp = addAuthHeaderFeature(dataProvider);
 
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <ExampleComponent text="Modern React component module" />
-      </div>
+      <Admin
+        customSagas={[errorsSaga]}
+        customReducers={{
+          errors: errorsReducer
+        }}
+        dataProvider={dp}
+        authProvider={authProvider}
+      >
+        <Resource name="users" {...users} />
+        <Resource name="roles" {...roles} />
+      </Admin>
     );
   }
 }
