@@ -1,5 +1,6 @@
 import { useForm } from "react-final-form";
-import { connect } from "react-redux";
+import { put } from "redux-saga/effects";
+
 import { CRUD_REMOTE_VALIDATION_CLEAR } from "./errorsSaga";
 
 const getKeyAndValue = (object, prefix = null) => {
@@ -36,7 +37,7 @@ const RemoteErrorsInterceptor = ({ dispatch, errors, ...props }) => {
         );
         if (modifiedFields.length > 0) {
           modifiedFields.forEach(name => form.resetFieldState(name));
-          dispatch({
+          put({
             type: CRUD_REMOTE_VALIDATION_CLEAR,
             payload: { modifiedFields }
           });
@@ -49,4 +50,4 @@ const RemoteErrorsInterceptor = ({ dispatch, errors, ...props }) => {
   return null;
 };
 
-export default connect()(RemoteErrorsInterceptor);
+export default RemoteErrorsInterceptor;
