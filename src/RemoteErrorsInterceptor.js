@@ -18,7 +18,10 @@ const getKeyAndValue = (object, prefix = null) => {
   return array;
 };
 
-const RemoteErrorsInterceptor = ({ dispatch, errors, ...props }) => {
+const RemoteErrorsInterceptor = ({ errors }) => {
+  if (!errors) {
+    return null;
+  }
   const form = useForm();
   const keysAndValues = getKeyAndValue(errors);
   // See: https://final-form.org/docs/final-form/types/FormApi
