@@ -35,10 +35,10 @@ After you can customize your Create/Edit views adding few settings:
 import { compose } from "recompose";
 import RemoteErrorsInterceptor, { withErrors } from "ra-remote-validator";
 
-const MyCustomFormCreate = ({ errors, ...props }) => (
+const MyCustomFormCreate = ({ dispatch, validate, errors, ...props }) => (
   <Create {...props}>
-    <SimpleForm redirect="list" validate={() => errors}>
-      <RemoteErrorsInterceptor errors={errors} />
+    <SimpleForm redirect="list" validate={validate}>
+      <RemoteErrorsInterceptor errors={errors} dispatch={dispatch} />
       <TextInput source="code" />
       <TextInput source="name" />
     </SimpleForm>
@@ -51,8 +51,10 @@ export default compose(withErrors)(MyCustomFormCreate);
 The `validate` method is valorized with lambda that simply returns errors provided by props.
 Inside the form, to ensure benefits provided by react-final-form, we have to add
 a simple component (that returns null anyway) called `RemoteErrorsInterceptor`, this
-component handle errors management (focus, cancelation and submissions checks).
-Finally the entire component is exported using `withErrors`.
+component will be responsible for the error's state management inside every field of the form.
+
+Finally the entire component is exported using `withErrors` that will provide access to
+many props: errors, validate, dispatch.
 
 ## API
 
@@ -75,8 +77,12 @@ setErrorsMapper(action => {
 ```
 
 _Notes_: setErrorsMapper can be called everywhere in your app, this function will replace
-default validation function with your one. I suggest you to configure this action on
-application bootstrap.
+default validation function and I suggest you to exec the configuration inside your
+app index.js (in the starting point).
+
+_Please_: I've implemented this library after checking the capabilities of react-final-form.
+I will really appreciate if someone has new suggestion that can be used to improve this project in
+terms of code or design. In any case I hope this can help you too.
 
 ## License
 
