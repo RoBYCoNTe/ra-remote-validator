@@ -3,10 +3,10 @@ import { Edit, SimpleForm, TextInput } from "react-admin";
 import { compose } from "recompose";
 import RemoteErrorsInterceptor, { withErrors } from "ra-remote-validator";
 
-const RoleEdit = ({ errors, ...props }) => (
+const RoleEdit = ({ dispatch, validate, errors, ...props }) => (
   <Edit {...props} undoable={false}>
-    <SimpleForm redirect="list" validate={() => errors}>
-      <RemoteErrorsInterceptor errors={errors} />
+    <SimpleForm redirect="list" validate={validate}>
+      <RemoteErrorsInterceptor errors={errors} dispatch={dispatch} />
       <TextInput source="code" />
       <TextInput source="name" />
     </SimpleForm>

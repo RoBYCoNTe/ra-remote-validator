@@ -7,7 +7,8 @@ import { connect } from "react-redux";
  */
 const withErrors = Component =>
   connect(state => ({
-    errors: state.errors || []
-  }))(({ dispatch, ...props }) => <Component {...props} />);
+    errors: state.errors || {},
+    validate: () => state.errors || {}
+  }))(({ ...props }) => <Component {...props} />);
 
 export default withErrors;

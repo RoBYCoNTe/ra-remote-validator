@@ -17,10 +17,10 @@ const MyCheckboxGroupInput = ({ loaded, ...props }) => (
   <CheckboxGroupInput {...props} choices={props.choices || []} />
 );
 
-const UserEdit = ({ errors, ...props }) => (
+const UserEdit = ({ dispatch, validate, errors, ...props }) => (
   <Edit {...props} undoable={false}>
-    <SimpleForm validate={() => errors}>
-      <RemoteErrorsInterceptor errors={errors} />
+    <SimpleForm validate={validate}>
+      <RemoteErrorsInterceptor errors={errors} dispatch={dispatch} />
       <BooleanInput source="is_active" />
       <TextInput source="email" />
       <TextInput source="username" />

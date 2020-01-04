@@ -18,6 +18,10 @@ export default (previousState = {}, { type, payload }) => {
   if (type === CRUD_REMOTE_VALIDATION_ERROR) {
     return payload;
   } else if (type === CRUD_REMOTE_VALIDATION_CLEAR) {
+    console.info({
+      type,
+      payload
+    });
     const { modifiedFields } = payload;
     if (modifiedFields === false) {
       return {};

@@ -16,11 +16,11 @@ const MyCheckboxGroupInput = ({ loaded, ...props }) => (
   <CheckboxGroupInput {...props} choices={props.choices || []} />
 );
 
-const UserCreate = ({ dispatch, errors, ...props }) => {
+const UserCreate = ({ dispatch, validate, errors, ...props }) => {
   return (
     <Create {...props}>
-      <SimpleForm redirect="list" validate={() => errors}>
-        <RemoteErrorsInterceptor errors={errors} />
+      <SimpleForm redirect="list" validate={validate}>
+        <RemoteErrorsInterceptor errors={errors} dispatch={dispatch} />
         <TextInput source="email" />
         <TextInput source="username" />
         <TextInput source="password" type="password" />
