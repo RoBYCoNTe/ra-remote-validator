@@ -4,7 +4,8 @@ import {
   SimpleForm,
   TextInput,
   ReferenceArrayInput,
-  CheckboxGroupInput
+  CheckboxGroupInput,
+  required
 } from "react-admin";
 import { compose } from "recompose";
 import RemoteErrorsInterceptor, { withErrors } from "ra-remote-validator";
@@ -21,7 +22,7 @@ const UserCreate = ({ dispatch, validate, errors, ...props }) => {
     <Create {...props}>
       <SimpleForm redirect="list" validate={validate}>
         <RemoteErrorsInterceptor errors={errors} dispatch={dispatch} />
-        <TextInput source="email" />
+        <TextInput source="email" validate={required()} />
         <TextInput source="username" />
         <TextInput source="password" type="password" />
         <TextInput source="profile.name" defaultValue="" />
